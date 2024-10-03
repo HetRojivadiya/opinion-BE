@@ -3,10 +3,10 @@ const router = express.Router();
 const LiveContest = require('../../models/LiveContest'); // Import the LiveContest model
 
 // New POST route to retrieve all contests but exclude sports_key and sport_title
-router.post('/', async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     // Find all contests, excluding sports_key and sport_title fields
-    const contests = await LiveContest.find({}, '-sports_key -sport_title');
+    const contests = await LiveContest.find({});
 
     if (!contests || contests.length === 0) {
       return res.status(404).json({ message: 'No contests found' });

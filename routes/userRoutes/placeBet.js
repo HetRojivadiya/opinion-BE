@@ -7,7 +7,8 @@ const Balance = require('../../models/Balance')
 router.post('/',async (req,res)=>{
     const { id,userId,option,price } = req.body;
     const balance = await Balance.findOne({userId})
-    if (!balance || balance.length === 0) {
+
+    if (!balance.balance === 0) {
       return res.status(404).json({ message: 'No User found' });
     }
     if(balance.balance < price)return res.status(404).json({ message: 'Low balance..' });
@@ -44,7 +45,7 @@ router.post('/',async (req,res)=>{
                 }
                 return res.status(200).json({ message:'Order booked succesfully see in portfolio' })
               }
-        },20000)
+        },10000)
 
 })
 
