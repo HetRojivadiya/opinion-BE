@@ -23,6 +23,7 @@ const logout = require('./routes/userRoutes/logout')
 const payment = require('./routes/userRoutes/payment')
 const matchBets = require('./routes/matchBets')
 const connectDB = require('./connectDB')
+const CompletedBets = require('./routes/userRoutes/completedBets')
 
 
 
@@ -37,6 +38,7 @@ app.use('/login',loginRoutes);
 app.use('/liveContest',liveContest);
 app.use('/viewContest',viewContest);
 app.use('/confirmedBets',seePortfolio);
+app.use('/completedBets',CompletedBets);
 
 app.use('/placeBet',placeBet);
 app.use('/seeCompletedContest',seeCompletedContest);
