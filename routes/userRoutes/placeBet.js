@@ -45,7 +45,7 @@ router.post('/',async (req,res)=>{
                 }
                 return res.status(200).json({ message:'Order booked succesfully see in portfolio' })
               }
-        },10000)
+        },15000)
 
 })
 
