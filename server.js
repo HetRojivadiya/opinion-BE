@@ -25,6 +25,7 @@ const matchBets = require('./routes/matchBets')
 const connectDB = require('./connectDB')
 
 
+
 connectDB();
 
 //user
@@ -35,8 +36,9 @@ app.use('/signup',signupRoutes);
 app.use('/login',loginRoutes);
 app.use('/liveContest',liveContest);
 app.use('/viewContest',viewContest);
+app.use('/confirmedBets',seePortfolio);
+
 app.use('/placeBet',placeBet);
-app.use('/seePortfolio',seePortfolio);
 app.use('/seeCompletedContest',seeCompletedContest);
 app.use('/logout',logout);
 //admin
