@@ -7,6 +7,7 @@ const axios = require('axios');
 router.post('/', async (req, res) => {
   try {
     const { key } = req.body
+    console.log(key)
     const response = await axios.get(`${process.env.SPECIFIC_SPORTS_LINK}`+`${key}/odds/?apiKey=${process.env.API_KEY}&regions=us&markets=h2h&oddsFormat=decimal`);
     res.status(200).json(response.data);
   } catch (error) {

@@ -22,7 +22,10 @@ router.post('/', async (req, res) => {
             return res.status(404).json({ message: 'Live contest not found.' });
         }
 
-        // Process each confirmed bet
+        // Separate confirmed bets into yesQueue and noQueue based on the winner option
+        const yesQueue = [];
+        const noQueue = [];
+
         for (let bet of confirmedBets) {
             let winner;
             if (winnerOption === 'YES') {
@@ -31,6 +34,14 @@ router.post('/', async (req, res) => {
                 winner = bet.noUserId; // NO option wins
             } else {
                 return res.status(400).json({ message: 'Invalid winner option provided.' });
+            }
+
+            // Populate the yesQueue and noQueue arrays
+            if (bet.yesUserId) {
+                yesQueue.push({ userId: bet.yesUserId, price: bet.yesPrice });
+            }
+            if (bet.noUserId) {
+                noQueue.push({ userId: bet.noUserId, price: bet.noPrice });
             }
 
             // Find the balance for the winner
@@ -59,7 +70,7 @@ router.post('/', async (req, res) => {
             await ConfirmedBets.findByIdAndDelete(bet._id);
         }
 
-        // Move the live contest to completed contest with winner info
+        // Move the live contest to completed contest with populated yesQueue and noQueue
         const completedContest = new CompletedContest({
             id: liveContest.id,
             title: liveContest.title,
@@ -69,9 +80,9 @@ router.post('/', async (req, res) => {
             away_team: liveContest.away_team,
             yes_odds: liveContest.yes_odds,
             no_odds: liveContest.no_odds,
-            yesQueue: liveContest.yesQueue,
-            noQueue: liveContest.noQueue,
-            winner: winnerOption, // Add the winner option
+            yesQueue: yesQueue, 
+            noQueue: noQueue,  
+            winner: winnerOption
         });
         await completedContest.save();
 

@@ -24,9 +24,10 @@ const payment = require('./routes/userRoutes/payment')
 const matchBets = require('./routes/matchBets')
 const connectDB = require('./connectDB')
 const CompletedBets = require('./routes/userRoutes/completedBets')
-
-
-
+const alreadyExist = require('./routes/alreadyExist')
+const completedContest = require('./routes/completedContest')
+const users = require('./routes/users')
+const manageUsers = require('./routes/manageUsers')
 connectDB();
 
 //user
@@ -49,7 +50,10 @@ app.use('/getAllCategories',getAllCategories);
 app.use('/getSpecificSports',getSpecificSports);
 app.use('/createContest',createContest);
 app.use('/selectWinner',selectWinner);
-
+app.use('/alreadyExist',alreadyExist);
+app.use('/completedContest',completedContest)
+app.use('/users',users)
+app.use('/manageusers',manageUsers)
 app.get("/",(req,res)=>{
     res.json("message is clear")
 })

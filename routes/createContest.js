@@ -5,7 +5,7 @@ const LiveContest = require('../models/LiveContest'); // Import the LiveContest 
 // Function to insert live contest data into MongoDB
 const insertLiveContest = async (data) => {
   const { id,title, sports_key, sport_title, home_team, away_team, odds } = data;
-
+  console.log(sports_key);
   // Check if contest with this ID already exists
   const existingContest = await LiveContest.findOne({ id });
   if (existingContest) {
@@ -35,7 +35,7 @@ const insertLiveContest = async (data) => {
     await newContest.save();
     return { message: 'entry added successfully' };
   } catch (error) {
-    return { message: 'error adding entry', error };
+    return { message: 'error 123 entry'+ error };
   }
 };
 
