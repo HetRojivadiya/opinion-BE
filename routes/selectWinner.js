@@ -14,14 +14,31 @@ router.post('/', async (req, res) => {
         const confirmedBets = await ConfirmedBets.find({ contestId });
         const liveContest = await LiveContest.findOne({ id: contestId });
 
-        if (!confirmedBets || confirmedBets.length === 0) {
-            return res.status(404).json({ message: 'No bets found for this contest.' });
-        }
-
         if (!liveContest) {
             return res.status(404).json({ message: 'Live contest not found.' });
         }
 
+        if (!confirmedBets || confirmedBets.length === 0) {
+            const completedContest = new CompletedContest({
+                id: liveContest.id,
+                title: liveContest.title,
+                sports_key: liveContest.sports_key,
+                sport_title: liveContest.sport_title,
+                home_team: liveContest.home_team,
+                away_team: liveContest.away_team,
+                yes_odds: liveContest.yes_odds,
+                no_odds: liveContest.no_odds,
+                yesQueue: [], 
+                noQueue: [],  
+                winner: winnerOption
+            });
+            await completedContest.save();
+    
+            // Delete the contest from LiveContest
+            await LiveContest.findOneAndDelete({ id: contestId });
+    
+           return res.status(200).json({ message: 'Contest settled successfully, with no participents.' });
+        }
         // Separate confirmed bets into yesQueue and noQueue based on the winner option
         const yesQueue = [];
         const noQueue = [];
