@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 const cors = require('cors')
-app.use(cors({ credentials: true, origin: 'http://localhost:3000' }))
+app.use(cors({ credentials: true, origin: 'https://opinion-fe.onrender.com' }))
 const dotenv = require('dotenv')
 dotenv.config();
 const PORT = process.env.PORT
