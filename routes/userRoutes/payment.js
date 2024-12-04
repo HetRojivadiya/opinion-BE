@@ -14,8 +14,8 @@ const MERCHANT_ID = "PGTESTPAYUAT86";
 const MERCHANT_BASE_URL = "https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/pay";
 const MERCHANT_STATUS_URL = "https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/status";
 const redirectUrl = "https://opinion-be.onrender.com//payment/status";
-const successUrl = "http://localhost:3000/payment-successful";
-const failureUrl = "http://localhost:3000/payment-failed";
+const successUrl = "https://opinion-fe.onrender.com/payment-successful";
+const failureUrl = "https://opinion-fe.onrender.com/payment-failed";
 
 router.post('/create-order', async (req, res) => {
   const { name, email, amount } = req.body;
