@@ -1,7 +1,24 @@
 const express = require('express')
 const app = express()
 const cors = require('cors')
-app.use(cors({ credentials: true, origin: 'https://opinion-fe.onrender.com' }))
+
+const allowedOrigins = [
+  'https://opinion-fe.onrender.com',
+  'http://localhost:3000'
+];
+
+app.use(cors({
+  credentials: true,
+  origin: function (origin, callback) {
+    if (allowedOrigins.includes(origin) || !origin) {
+      // Allow requests with no origin (e.g., mobile apps or curl requests)
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
+}));
+
 const dotenv = require('dotenv')
 dotenv.config();
 const PORT = process.env.PORT
@@ -28,12 +45,15 @@ const alreadyExist = require('./routes/alreadyExist')
 const completedContest = require('./routes/completedContest')
 const users = require('./routes/users')
 const manageUsers = require('./routes/manageUsers')
+const withdrawRoutes = require('./routes/userRoutes/withdraw');
+
 connectDB();
 
 //user
 app.use('/checkToken',checkToken);
 app.use('/getUserDetails',userDetails);
 app.use('/payment', payment );
+app.use('/withdraw', withdrawRoutes);
 app.use('/signup',signupRoutes);
 app.use('/login',loginRoutes);
 app.use('/liveContest',liveContest);
