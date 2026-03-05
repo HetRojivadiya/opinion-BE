@@ -4,7 +4,8 @@ const cors = require('cors')
 
 const allowedOrigins = [
   'https://opinion-fe.onrender.com',
-  'http://localhost:3000'
+  'http://localhost:3000',
+  'https://opinion-be.onrender.com'
 ];
 
 app.use(cors({
