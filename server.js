@@ -6,18 +6,6 @@ app.use(cors({
   origin: "*"
 }));
 
-app.use(cors({
-  credentials: true,
-  origin: function (origin, callback) {
-    if (allowedOrigins.includes(origin) || !origin) {
-      // Allow requests with no origin (e.g., mobile apps or curl requests)
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  }
-}));
-
 const dotenv = require('dotenv')
 dotenv.config();
 const PORT = process.env.PORT
